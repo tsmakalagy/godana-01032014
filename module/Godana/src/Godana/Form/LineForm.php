@@ -22,7 +22,6 @@ class LineForm extends Form implements ServiceLocatorAwareInterface, ObjectManag
 	public function init()
     {
         $this->setAttribute('method','post')
-             ->setAttribute('class','form-horizontal')
              ->setHydrator(new DoctrineHydrator($this->objectManager, '\Godana\Entity\Line'))
              ->setInputFilter(new InputFilter());
 
@@ -31,7 +30,7 @@ class LineForm extends Form implements ServiceLocatorAwareInterface, ObjectManag
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'zone',
                 'attributes' => array(
-            		'class' => 'chosen-select form-control',
+            		'class' => 'zone-select gdn_select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -39,9 +38,10 @@ class LineForm extends Form implements ServiceLocatorAwareInterface, ObjectManag
                     'property'       => 'name',
                     'label'          => 'Zone',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
-                    'disable_inarray_validator' => true               
+                    'disable_inarray_validator' => true,
+			        'empty_option' => 'Select zone...',          
                 ),
             )
         );

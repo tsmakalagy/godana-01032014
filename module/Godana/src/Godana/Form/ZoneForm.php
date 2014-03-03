@@ -22,7 +22,6 @@ class ZoneForm extends Form implements ServiceLocatorAwareInterface, ObjectManag
 	public function init()
     {
         $this->setAttribute('method','post')
-             ->setAttribute('class','form-horizontal')
              ->setHydrator(new DoctrineHydrator($this->objectManager, '\Godana\Entity\Zone'))
              ->setInputFilter(new InputFilter());
 

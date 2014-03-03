@@ -36,13 +36,14 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
                 'type' => 'text',
                 'name' => 'select-departure',
                 'attributes' => array(
-            		'class' => 'form-control',
+            		'class' => 'gdn_select',
             		'id' => 'select_departure',
+            		'placeholder' => 'Departure',
                 ),                
                 'options' => array(
                     'label'          => 'Departure',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),    
                 ),
             )
@@ -61,13 +62,14 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
                 'type' => 'text',
                 'name' => 'select-arrival',
                 'attributes' => array(
-            		'class' => 'form-control',
+            		'class' => 'gdn_select',
             		'id' => 'select_arrival',
+            		'placeholder' => 'Arrival',
                 ),                
                 'options' => array(
                     'label'          => 'Arrival',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),    
                 ),
             )

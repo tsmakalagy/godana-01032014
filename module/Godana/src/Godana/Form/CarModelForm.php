@@ -23,7 +23,6 @@ class CarModelForm extends Form implements ServiceLocatorAwareInterface, ObjectM
 	public function init()
     {
         $this->setAttribute('method','post')
-             ->setAttribute('class','form-horizontal')
              ->setHydrator(new DoctrineHydrator($this->objectManager, '\Godana\Entity\CarModel'))
              ->setInputFilter(new InputFilter());
 

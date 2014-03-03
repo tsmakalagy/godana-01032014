@@ -1,8 +1,9 @@
+<? $this->headTitle($this->translate('Admin Cooperative'));?>
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
 <div class="panel panel-primary">
 <div class="panel-heading">
-	<h3 class="panel-title"><?php echo $this->translate('Car make'); ?></h3>
+	<h3 class="panel-title"><?php echo $this->translate('Add car make'); ?></h3>
 </div>
 <div class="panel-body">
 <? if ($this->status):?>
@@ -16,7 +17,6 @@ $form = $this->carMakeForm;
 $form->prepare();
 $form->setAttribute('action', $this->url('admin/cooperative/car_make_add', array('lang' => $this->lang)));
 $form->setAttribute('method', 'post');
-$form->setAttribute('class', 'form-horizontal');
 ?>
 <?php echo $this->form()->openTag($form) ?>
 <? $carMake = $form->get('car-make-form'); ?>
@@ -25,7 +25,7 @@ $form->setAttribute('class', 'form-horizontal');
 <div class="form-group <?php if($this->formElementErrors($name)) 
 echo "has-error" ?>">
 <?php echo $this->formLabel($name); ?>
-<div class="col-sm-7">
+<div class="gdn_input_margin">
 <?php echo $this->formElement($name) ?>
 <?php  echo $this->formElementErrors()
 	->setMessageOpenFormat('<div class="help-block">')
@@ -37,10 +37,8 @@ echo "has-error" ?>">
 
 <? echo $this->formHidden($form->get('csrf'));?>
 
-<div class="form-group">
-<div class="col-sm-4 col-sm-offset-3">
-<? echo $this->formElement($form->get('submit'));?>
-</div>
+<div class="fd_action pull-right">
+	<?=$this->formElement($form->get('submit'));?>
 </div>
 <?php echo $this->form()->closeTag() ?>
 </div>

@@ -37,7 +37,7 @@ class CarModelFieldset extends Fieldset implements InputFilterProviderInterface,
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'make',
                 'attributes' => array(
-            		'class' => 'form-control make-select',
+            		'class' => 'gdn_select make-select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -48,8 +48,9 @@ class CarModelFieldset extends Fieldset implements InputFilterProviderInterface,
 		            },
                     'label'          => 'Make',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
+			        'empty_option' => 'Select make',
                     'disable_inarray_validator' => true               
                 ),
             )
@@ -60,12 +61,13 @@ class CarModelFieldset extends Fieldset implements InputFilterProviderInterface,
             'options' => array(
                 'label' => 'Model',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Model'
             ),
         ));
     }

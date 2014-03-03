@@ -37,12 +37,13 @@ class CarMakeFieldset extends Fieldset implements InputFilterProviderInterface, 
             'options' => array(
                 'label' => 'Make',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Make'
             ),
         ));
     }

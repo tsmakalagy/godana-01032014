@@ -36,12 +36,13 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
                 'type' => 'text',
                 'name' => 'name',
                 'attributes' => array(
-            		'class' => 'form-control'
+            		'class' => 'gdn_text',
+            		'placeholder' => 'Name'
                 ),                
                 'options' => array(
                     'label' => 'Name',
 	        		'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),   
                 ),
             )

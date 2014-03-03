@@ -234,7 +234,7 @@ class Module
                 			'type' => 'DoctrineModule\Form\Element\ObjectSelect',
 			                'name' => 'cooperative',
 			                'attributes' => array(
-			            		'class' => 'form-control cooperative-select',
+			            		'class' => 'gdn_select cooperative-select',
 			                ),                
 			                'options' => array(
 			                    'object_manager' => $sm->get('Doctrine\ORM\EntityManager'),
@@ -244,8 +244,9 @@ class Module
 			                	'label_generator' => function($targetEntity) {
 					                return ucwords($targetEntity->getName());
 					            },
+					            'empty_option' => 'Select cooperative',
 			                	'label_attributes' => array(
-						            'class' => 'col-sm-3 control-label',
+						            'class' => 'sr-only',
 						        ),
 						        'find_method' => array(
 						        	'name' => 'findCooperativeOfCurrentUser',

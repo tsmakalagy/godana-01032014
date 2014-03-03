@@ -64,10 +64,10 @@ class Cooperative extends \Godana\Entity\Cooperative implements \Doctrine\ORM\Pr
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'id', 'name', 'zones', 'lines', 'contacts', 'lineContacts', 'cars', 'drivers', 'admins', 'tellers');
+            return array('__isInitialized__', 'id', 'name', 'description', 'zones', 'lines', 'contacts', 'lineContacts', 'cars', 'drivers', 'admins', 'tellers');
         }
 
-        return array('__isInitialized__', 'id', 'name', 'zones', 'lines', 'contacts', 'lineContacts', 'cars', 'drivers', 'admins', 'tellers');
+        return array('__isInitialized__', 'id', 'name', 'description', 'zones', 'lines', 'contacts', 'lineContacts', 'cars', 'drivers', 'admins', 'tellers');
     }
 
     /**
@@ -219,6 +219,28 @@ class Cooperative extends \Godana\Entity\Cooperative implements \Doctrine\ORM\Pr
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'setName', array($name));
 
         return parent::setName($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDescription()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getDescription', array());
+
+        return parent::getDescription();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setDescription($description)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setDescription', array($description));
+
+        return parent::setDescription($description);
     }
 
     /**
