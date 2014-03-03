@@ -27,6 +27,12 @@ class Cooperative
 	protected $name;
 	
 	/**
+	 * @ORM\Column(type="text", nullable=true)
+	 * @var text
+	 */
+	protected $description;
+	
+	/**
 	 * @var \Doctrine\Common\Collections\Collection
      * @ORM\ManyToMany(targetEntity="Zone", inversedBy="cooperatives")
      * @ORM\JoinTable(name="gdn_cooperative_zone",
@@ -124,6 +130,16 @@ class Cooperative
 	public function setName($name)
 	{
 		$this->name = $name;
+	}
+	
+	public function getDescription()
+	{
+		return $this->description;
+	}
+	
+	public function setDescription($description)
+	{
+		$this->description = $description;
 	}
 	
 	public function addZones(Collection $zones)

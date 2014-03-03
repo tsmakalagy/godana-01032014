@@ -108,7 +108,7 @@ class CooperativeController extends AbstractActionController
     public function indexAction()
     {
     	
-    	$this->layout('layout/cooperative-layout');
+    	$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    
@@ -143,7 +143,7 @@ class CooperativeController extends AbstractActionController
     
     public function editCooperativeAction()
     {
-    	$this->layout('layout/cooperative-layout');
+    	$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $cooperativeId = $this->params()->fromRoute('cooperativeId', null);
@@ -151,6 +151,17 @@ class CooperativeController extends AbstractActionController
 	    if ($cooperativeId != null) {
 			$cooperative = $om->getRepository('Godana\Entity\Cooperative')->find($cooperativeId);
 			$form->bind($cooperative);
+		    $contacts = $cooperative->getContacts();
+		    $contactsTypes = array();
+		    foreach ($contacts as $c) {
+		    	$contactsTypes[] = $c->getType()->getId();
+		    }		    
+		    $contacts = $form->get('cooperative-form')->get('contacts');
+		    for ($i = 0; $i < count($contacts); $i++) {
+		    	$form->get('cooperative-form')->get('contacts')->get($i)->get('type')->setValue($contactsTypes[$i]);
+		    }
+			
+			
 			$url = $this->url()->fromRoute(static::ROUTE_EDIT_COOPERATIVE, array('lang' => $lang, 'cooperativeId' => $cooperativeId));
 		    $prg = $this->prg($url, true);
 	        if ($prg instanceof Response) {        	
@@ -188,7 +199,7 @@ class CooperativeController extends AbstractActionController
     
     public function createCooperativeAction()
     {
-    	$this->layout('layout/cooperative-layout');
+    	$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getCooperativeForm();
@@ -226,7 +237,7 @@ class CooperativeController extends AbstractActionController
     
 	public function addlineAction()
     {
-    	$this->layout('layout/cooperative-layout');
+    	$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getCooperativeLineForm();
@@ -350,7 +361,7 @@ class CooperativeController extends AbstractActionController
     
 	public function createZoneAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getZoneForm();
@@ -388,7 +399,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function createLineAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getLineForm();
@@ -430,7 +441,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function addCarMakeAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getCarMakeForm();
@@ -468,7 +479,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function addCarModelAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getCarModelForm();
@@ -505,7 +516,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function addCarDriverAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getCarDriverForm();
@@ -552,7 +563,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function addCarAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getCarForm();
@@ -622,7 +633,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function addCarLineAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getLineCarForm();
@@ -670,7 +681,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function createReservationBoardAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getReservationBoardForm();
@@ -721,7 +732,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function createReservationAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager(); 		
 	    $lang = $this->params()->fromRoute('lang', 'mg');
 	    $form = $this->getReservationForm();
@@ -995,7 +1006,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function listReservationBoardAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager();
 		$lang = $this->params()->fromRoute('lang', 'mg');
 		$currentUser = $this->zfcUserAuthentication()->getIdentity();
@@ -1024,7 +1035,7 @@ class CooperativeController extends AbstractActionController
 	
 	public function detailReservationBoardAction()
 	{
-		$this->layout('layout/cooperative-layout');
+		$this->layout('layout/sb-admin-layout');
 		$om = $this->getObjectManager();
 		$lang = $this->params()->fromRoute('lang', 'mg');
 		$reservationBoardId = $this->params()->fromRoute('reservationBoardId', null);

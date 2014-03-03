@@ -36,12 +36,28 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
             'options' => array(
                 'label' => 'Name',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
+            	'placeholder' => 'Name',
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            ),
+        ));
+        
+        $this->add(array(
+            'name' => 'description',
+            'options' => array(
+                'label' => 'Description',
+        		'label_attributes' => array(
+		            'class' => 'sr-only',
+		        ),
+            ),
+            'attributes' => array(
+            	'placeholder' => 'Description',
+                'type' => 'textarea',
+            	'class' => 'gdn_text',
             ),
         ));
         
@@ -68,7 +84,7 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
 			        ),
                     'label'          => 'Admins',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
                     'disable_inarray_validator' => true               
                 ),
@@ -98,7 +114,7 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
 			        ),
                     'label'          => 'Tellers',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
                     'disable_inarray_validator' => true               
                 ),
@@ -132,7 +148,7 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
         	'options' => array(
                 'label' => 'Zone',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -146,7 +162,7 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
         	'options' => array(
                 'label' => 'Line',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -165,6 +181,9 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
                      array ('name' => 'StripTags'),
                      array ('name' => 'StringTrim')
                 ),
+            ),
+            'description' => array(
+                'required' => false
             ),
             'admins' => array(
             	'required' => false,

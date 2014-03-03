@@ -17,6 +17,8 @@ class ProductController extends AbstractActionController
 	const ROUTE_ADD_TYPE = 'admin/product/type_add';
 	const ROUTE_ADD_PRODUCT = 'admin/product/add';
 	
+	const CONTROLLER_NAME    = 'product';
+	
 	/** 
      * @var Form
      */
@@ -166,6 +168,7 @@ class ProductController extends AbstractActionController
         		}
         	}
         	$om->flush();
+        	return $this->forward()->dispatch(static::CONTROLLER_NAME, array('action' => 'list', 'lang' => $lang));
         }
 	    return array(
 	    	'productForm' => $form,

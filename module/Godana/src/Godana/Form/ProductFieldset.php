@@ -152,6 +152,11 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'deleted'
         ));
+        
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Hidden',
+            'name' => 'created'
+        ));
 	}
 	
 	public function getInputFilterSpecification()
@@ -195,6 +200,9 @@ ServiceLocatorAwareInterface, ObjectManagerAwareInterface
                 'required' => true
             ),
             'deleted' => array(
+                'required' => false
+            ),
+            'created' => array(
                 'required' => false
             ),
 		);

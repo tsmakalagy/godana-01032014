@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection as Collection;
 
 /**
  * @ORM\Entity(repositoryClass="Godana\Entity\ProductRepository")
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="gdn_product")
  * @author raiza
  *
@@ -80,12 +81,30 @@ class Product
      * @ORM\Column(type="integer", name="is_deleted")
      */
     protected $deleted;
+    
+    /**
+     * @var datetime
+     * @ORM\Column(type="datetime", name="date_created")
+     * 
+     */
+    protected $created;
 	
 	public function __construct()
 	{
 		$this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
 		$this->files = new \Doctrine\Common\Collections\ArrayCollection();
 	}
+	
+	/**
+     * @ORM\PrePersist
+     */
+    public function timestamp()
+    {
+        if(is_null($this->created)) {
+            $this->setCreated(new \DateTime());
+        }
+        return $this;
+    }
 	
 	public function getId()
 	{
@@ -208,6 +227,16 @@ class Product
         foreach ($files as $file) {
             $this->files->removeElement($file);
         }
+    }
+    
+    public function getCreated()
+    {
+    	return $this->created;
+    }
+    
+    public function setCreated($created)
+    {
+    	$this->created = $created;
     }
     
 	/**
