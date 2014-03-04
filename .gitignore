@@ -1,0 +1,7 @@
+.project
+.settings
+composer.lock
+data/cache
+data/data
+data/DoctrineORMModule
+data/search
