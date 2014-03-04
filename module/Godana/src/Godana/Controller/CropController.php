@@ -93,7 +93,8 @@ class CropController extends AbstractActionController
 					}				
 					if ($file instanceof File && $success) {
 						$image = new Image();
-						$newName = urldecode(array_pop(array_splice(explode('/', $return),-1)));
+						//$newName = urldecode(array_pop(array_splice(explode('/', $return),-1)));
+						$newName = urldecode(substr($return, strrpos($return, '/') + 1));
 						$image->setName($newName);
 						$image->setDimension($dim);
 						$image->setFile($file);
