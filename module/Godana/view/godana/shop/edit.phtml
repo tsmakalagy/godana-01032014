@@ -342,7 +342,8 @@ var category_placeholder = "<?=$this->translate('Categories'); ?>";
 var owner_placeholder = "<?=$this->translate('Owner'); ?>";
 var city_placeholder = "<?=$this->translate('City'); ?>";
     var city_url = "<?=$this->basePath();?>/admin/shop/city",
-        ajax_url = "<?=$this->basePath();?>/admin/shop/upload";
+        ajax_url = "<?=$this->basePath();?>/admin/shop/upload",
+        crop_url = "<?=$this->basePath();?>/crop";
 $(function() {
 	$(".category-select").select2({
 		placeholder: category_placeholder,
@@ -396,7 +397,8 @@ $(function() {
 		xs: 0,
 		sm: 400,
 		md: 1170,
-		ajaxUrl: ajax_url+'?shopId='+shopId
+		ajaxUrl: ajax_url+'?shopId='+shopId,
+        cropUrl: crop_url
 	});
 
 	$('#save-images').click(function(e) {

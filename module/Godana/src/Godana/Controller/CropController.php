@@ -26,7 +26,9 @@ class CropController extends AbstractActionController
 			$uploadPath = '';
 			if (isset($source)) {
 				$relativePath = urldecode(substr($source['file'], strpos($source['file'], '/files/')));
-				$filename = urldecode(array_pop(array_splice(explode('/', $source['file']),-1)));
+				//$filename = urldecode(array_pop(array_splice(explode('/', $source['file']),-1)));
+				$filename = urldecode(substr($source['file'], strrpos($source['file'], '/') + 1));
+                var_dump($filename);
 				$thePicture = PUBLIC_PATH . $relativePath;
 				$uploadPath = substr($thePicture, 0, strrpos($thePicture, '/'));
 				$cacheFolder = $uploadPath . '/cropped/';
@@ -36,8 +38,9 @@ class CropController extends AbstractActionController
 				$lii->setCacheFolder($cacheFolder);
 			} else {
 				$relativePath = urldecode(substr($source['file'], strpos($post->get('file'), '/files/')));
-				$filename = urldecode(array_pop(array_splice(explode('/', $post->get('file')),-1)));
-				$thePicture = PUBLIC_PATH . $relativePath;
+				//$filename = urldecode(array_pop(array_splice(explode('/', $post->get('file')),-1)));
+				$filename = urldecode(substr($source['file'], strrpos($post->get('file'), '/') + 1));
+                $thePicture = PUBLIC_PATH . $relativePath;
 				$uploadPath = substr($thePicture, 0, strrpos($thePicture, '/'));
 				$cacheFolder = $uploadPath . '/cropped/';
 				if (!is_dir($cacheFolder)) {
