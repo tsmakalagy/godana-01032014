@@ -33,7 +33,7 @@ class CropController extends AbstractActionController
 				$uploadPath = substr($thePicture, 0, strrpos($thePicture, '/'));
 				$cacheFolder = $uploadPath . '/cropped/';
 				if (!is_dir($cacheFolder)) {
-	                mkdir($cacheFolder, '0775', true);
+	                mkdir($cacheFolder, 0777, true);
 	            }
 				$lii->setCacheFolder($cacheFolder);
 			} else {
@@ -44,7 +44,7 @@ class CropController extends AbstractActionController
 				$uploadPath = substr($thePicture, 0, strrpos($thePicture, '/'));
 				$cacheFolder = $uploadPath . '/cropped/';
 				if (!is_dir($cacheFolder)) {
-	                mkdir($cacheFolder, '0775', true);
+	                mkdir($cacheFolder, 0777, true);
 	            }
 				$lii->setCacheFolder($cacheFolder);
 				$post->setPost(array('url' => $thePicture));
