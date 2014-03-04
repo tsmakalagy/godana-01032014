@@ -79,12 +79,13 @@ echo "has-error" ?>">
 			->appendFile($this->basePath() . '/js/select2.min.js')?>
 
 <script type="text/javascript">
+    var city_url = "<?=$this->basePath();?>/admin/shop/city";
 $(function() {
 	$("#select_departure").select2({
 		placeholder: "Search for a city",
 	    minimumInputLength: 3,
 	    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-	        url: "/admin/shop/city",
+	        url: city_url,
 	        dataType: 'json',
 	        quietMillis: 100,
 	        data: function (term, page) {
@@ -111,7 +112,7 @@ $(function() {
 		placeholder: "Search for a city",
 	    minimumInputLength: 3,
 	    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
-	        url: "/admin/shop/city",
+	        url: city_url,
 	        dataType: 'json',
 	        quietMillis: 100,
 	        data: function (term, page) {
