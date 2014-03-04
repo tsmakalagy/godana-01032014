@@ -207,15 +207,18 @@ class ShopController extends AbstractActionController
         $form->setData($post);
         $listFileId = array();
  		if ($form->isValid()) {
- 			$listFileId = $post['file-id'];
-            if (count($listFileId) > 0) {
-            	foreach ($listFileId as $fileId) {
-            		$file = $om->find('Godana\Entity\File', (int)$fileId);
-            		if ($file instanceof \Godana\Entity\File) {
-            			$shop->setCover($file);
-            		}	            		
-            	}
+            if (array_key_exists('file-id', $post)) {
+                $listFileId = $post['file-id'];
+                if (count($listFileId) > 0) {
+                    foreach ($listFileId as $fileId) {
+                        $file = $om->find('Godana\Entity\File', (int)$fileId);
+                        if ($file instanceof \Godana\Entity\File) {
+                            $shop->setCover($file);
+                        }	            		
+                    }
+                }
             }
+ 			
         	$shop->setIdent($this->slug()->seoUrl($shop->getName()));	        	
         	$om->persist($shop);
             $om->flush();
