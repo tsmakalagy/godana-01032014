@@ -472,19 +472,20 @@ class Module
    	}
    	
 	public function onBootstrap(MvcEvent $e)
-    {
+    {    	
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
         $translator = $e->getApplication()->getServiceManager()->get('translator');
         
         $eventManager->attach(MvcEvent::EVENT_ROUTE, function($e) { 
-            $routeMatch = $e->getRouteMatch(); 
+            $routeMatch = $e->getRouteMatch();            
             $language = $routeMatch->getParam('lang', 'en');
             $translator = $e->getApplication()->getServiceManager()->get('translator');
+            
             $translator->addTranslationFile(
 		        'phpArray',
-		        './vendor/zendframework/zendframework/resources/languages/'.$language.'/Zend_Validate.php'
+		        dirname(__FILE__) . '/../../vendor/zendframework/zendframework/resources/languages/'.$language.'/Zend_Validate.php'
 		
 			);
 			AbstractValidator::setDefaultTranslator($translator);
@@ -513,12 +514,9 @@ class Module
 //		$translator->setLocale(\Locale::acceptFromHttp($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 //			->setFallbackLocale($language);
    		$view = $e->getViewModel();
-   		if ($view instanceof \Zend\View\Model\JsonModel) {
-   				
-   		} else {
-   			$view->setVariable( 'lang', $lang );
-   		}
-    	
+   		if (!$view instanceof \Zend\View\Model\JsonModel) {
+   			$view->setVariable( 'lang', $lang );	
+   		} 
    	}
    	
 	public function getFormElementConfig()

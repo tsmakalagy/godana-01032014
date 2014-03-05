@@ -15,6 +15,7 @@ class Bootstrap
     protected static $serviceManager;
     protected static $config;
     protected static $bootstrap;
+    protected static $entityManager;
 
     public static function init()
     {
@@ -52,15 +53,24 @@ class Bootstrap
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', $config);
-        $serviceManager->get('ModuleManager')->loadModules();
+        $serviceManager->get('ModuleManager')->loadModules(); 
+        
+        $entityManager = $serviceManager->get('Doctrine\ORM\EntityManager');
+         
 
         static::$serviceManager = $serviceManager;
+        static::$entityManager = $entityManager;
         static::$config = $config;
     }
 
     public static function getServiceManager()
     {
         return static::$serviceManager;
+    }
+    
+    public static function getEntityManager()
+    {
+    	return static::$entityManager;
     }
 
     public static function getConfig()
