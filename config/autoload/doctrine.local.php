@@ -4,8 +4,8 @@ return array(
     	'connection' => array(
       		'orm_default' => array(
         		'params' => array(
-          			'user'     => 'mysqluser',
-          			'password' => 'mysqluser'
+          			'user'     => 'travis',
+          			'password' => ''
 				)
 			)
 		)

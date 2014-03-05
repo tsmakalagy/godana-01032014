@@ -1,8 +1,8 @@
 <?php
 $dbParams = array(
       'database'  => 'godana',
-      'username'  => 'mysqluser',
-      'password'  => 'mysqluser',
+      'username'  => 'travis',
+      'password'  => '',
       'hostname'  => 'localhost',
   );
 
