@@ -203,8 +203,12 @@ $(function() {
 	});
 
 	$('#myModal').on('hide.bs.modal', function(e) {
-		$('.modal-body').html("");
+		$('#myModal .modal-body').html("");
 		$('.btn-save').button('reset');
+	});
+
+	$('#viewReservationModal').on('hide.bs.modal', function(e) {
+		$('#viewReservationModal .modal-body').html("");
 	});
 	
 	
