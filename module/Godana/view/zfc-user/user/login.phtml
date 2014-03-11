@@ -49,7 +49,7 @@ $form->setAttribute('role', 'form');
 
 <?php if ($this->enableRegistration) : ?>
 <div class="row">
-<div class="col-sm-7">
+<div class="col-sm-12">
 <?php echo $this->translate('Not registered?'); ?> <a href="<?php echo $this->url('zfcuser/register', array(), array(), true) . ($this->redirect ? '?redirect='.$this->redirect : '') ?>"><?php echo $this->translate('Sign up!'); ?></a>
 </div>
 </div>

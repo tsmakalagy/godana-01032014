@@ -39,7 +39,7 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'cooperative',
                 'attributes' => array(
-            		'class' => 'form-control cooperative-select',
+            		'class' => 'gdn_select cooperative-select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -50,7 +50,7 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
 		            },
                     'label'          => 'Cooperative',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
 			        'find_method' => array(
 			        	'name' => 'findCooperativeOfCurrentUser',
@@ -58,6 +58,7 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
 			        		'currentUser' => 1
 			        	),			        	
 			        ),
+			        'empty_option' => 'Select cooperative',
                     'disable_inarray_validator' => true               
                 ),
             )
@@ -68,7 +69,7 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'make',
                 'attributes' => array(
-            		'class' => 'form-control make-select',
+            		'class' => 'gdn_select make-select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -79,8 +80,9 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
 		            },
                     'label'          => 'Make',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
+			        'empty_option' => 'Select car',
                     'disable_inarray_validator' => true               
                 ),
             )
@@ -90,12 +92,12 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'model',
         	'attributes' => array(
-        		'class' => 'model-select form-control'
+        		'class' => 'model-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Model',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -104,12 +106,12 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'driver',
         	'attributes' => array(
-        		'class' => 'driver-select form-control'
+        		'class' => 'driver-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Driver',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -119,12 +121,13 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
             'options' => array(
                 'label' => 'License',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'License'
             ),
         ));
         
@@ -140,7 +143,12 @@ class CarFieldset extends Fieldset implements InputFilterProviderInterface, Serv
             'id' => array(
                 'required' => false
             ),
-
+			'model' => array(
+                'required' => true
+            ),
+            'driver' => array(
+                'required' => true
+            ),
             'license' => array(
                 'required' => true,
             	'filters'  => array(

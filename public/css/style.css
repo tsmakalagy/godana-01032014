@@ -596,3 +596,67 @@ div.container a.brand {
 	.coverPhoto h3 {font-size: 1.5em;}
 	.cover-title {width: 70%;}	
 }
+
+.user-sprite {
+	background: url("../img/user_sprite.png") no-repeat transparent;
+}
+
+.driver, .seat-available, .seat-taken, .seat-paid {
+	width: 60px;
+	height: 59px;
+	display: block;	
+}
+
+.seat-available {
+	background-position: -240px 10px;
+}
+
+.driver {
+	background-position: 0px 10px;
+	margin-left: 16px;
+}
+
+.td-driver {
+	text-align: center;
+}
+
+.seat-taken {
+	background-position: -60px 10px;
+}
+
+.seat-paid {
+	background-position: -120px 10px;
+}
+
+a.detail-seat {
+    text-decoration: none;
+    width: 60px;
+}
+
+.seat-action {
+    background: none repeat scroll 0 0 #F5F5F5;
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 4px 4px 4px;
+    display: none;
+    left: 0;
+    padding-left: 6px;
+    position: relative;
+    top: 26px;
+    width: 60px;
+}
+
+.seat-passenger:hover > .seat-action {
+	display: block;
+	pointer: cursor;
+}
+
+.reservation-table-3 td {
+	padding: 0 15px;
+}
+.reservation-table-4 td {
+	padding: 0 12px;
+}
+
+.bootbox-body {
+    font-size: 18px;
+}

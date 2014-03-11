@@ -1,6 +1,9 @@
 .codio
 .project
 .settings
+.htaccess
+.htpasswd
+.buildpath
 composer.lock
 data/cache
 data/data

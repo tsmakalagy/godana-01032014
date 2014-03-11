@@ -245,7 +245,7 @@ return array(
     "The input is not less or equal than '%max%'" => "L'entrée n'est pas inférieure ou égale à '%max%'",
 
     // Zend\Validator\NotEmpty
-    "Value is required and can't be empty" => "Une valeur est requise et ne peut être vide",
+    "Value is required and can't be empty" => "Tsy azo atao banga ito",
     "Invalid type given. String, integer, float, boolean or array expected" => "Type invalide. Chaîne, entier, flottant, booléen ou tableau attendu",
 
     // Zend\Validator\Regex

@@ -3,6 +3,11 @@ return array(
     'modules' => array(
     	'DoctrineModule',
 		'DoctrineORMModule',
+		'ZfcBase',
+		'ZfcUser',		
+		'ZfcUserDoctrineORM',
+    	'BjyAuthorize',
+		'SamUser',
         'Godana',
     ),
     'module_listener_options' => array(

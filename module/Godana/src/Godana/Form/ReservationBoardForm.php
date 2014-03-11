@@ -23,7 +23,6 @@ class ReservationBoardForm extends Form implements ServiceLocatorAwareInterface,
 	public function init()
     {
         $this->setAttribute('method','post')
-             ->setAttribute('class','form-horizontal')
              ->setHydrator(new DoctrineHydrator($this->objectManager, '\Godana\Entity\ReservationBoard'))
              ->setInputFilter(new InputFilter());
 

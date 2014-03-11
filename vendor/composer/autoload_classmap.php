@@ -7,9 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'BjyProfiler\\Module' => $vendorDir . '/bjyoungblood/bjy-profiler/Module.php',
-    'ScnSocialAuthTest\\Controller\\UserControllerTest' => $vendorDir . '/socalnick/scn-social-auth/test/ScnSocialAuthTest/Controller/UserControllerTest.php',
-    'ScnSocialAuthTest\\RouteAssemblyTest' => $vendorDir . '/socalnick/scn-social-auth/test/ScnSocialAuthTest/RouteAssemblyTest.php',
-    'ScnSocialAuthTest\\Service\\HybridAuthFactoryTest' => $vendorDir . '/socalnick/scn-social-auth/test/ScnSocialAuthTest/Service/HybridAuthFactoryTest.php',
     'ScnSocialAuth\\Authentication\\Adapter\\Exception\\ExceptionInterface' => $vendorDir . '/socalnick/scn-social-auth/src/ScnSocialAuth/Authentication/Adapter/Exception/ExceptionInterface.php',
     'ScnSocialAuth\\Authentication\\Adapter\\Exception\\RuntimeException' => $vendorDir . '/socalnick/scn-social-auth/src/ScnSocialAuth/Authentication/Adapter/Exception/RuntimeException.php',
     'ScnSocialAuth\\Authentication\\Adapter\\HybridAuth' => $vendorDir . '/socalnick/scn-social-auth/src/ScnSocialAuth/Authentication/Adapter/HybridAuth.php',
@@ -43,7 +40,6 @@ return array(
     'ScnSocialAuth\\Service\\UserProviderViewHelperFactory' => $vendorDir . '/socalnick/scn-social-auth/src/ScnSocialAuth/Service/UserProviderViewHelperFactory.php',
     'ScnSocialAuth\\View\\Helper\\ScnUserProvider' => $vendorDir . '/socalnick/scn-social-auth/src/ScnSocialAuth/View/Helper/ScnUserProvider.php',
     'ScnSocialAuth\\View\\Helper\\SocialSignInButton' => $vendorDir . '/socalnick/scn-social-auth/src/ScnSocialAuth/View/Helper/SocialSignInButton.php',
-    'ScnSocialAuthtest\\Bootstrap' => $vendorDir . '/socalnick/scn-social-auth/test/Bootstrap.php',
     'ZendDeveloperTools\\Module' => $vendorDir . '/zendframework/zend-developer-tools/Module.php',
     'ZfcBase\\Module' => $vendorDir . '/zf-commons/zfc-base/Module.php',
     'ZfcUserDoctrineORM\\Entity\\User' => $vendorDir . '/zf-commons/zfc-user-doctrine-orm/src/ZfcUserDoctrineORM/Entity/User.php',

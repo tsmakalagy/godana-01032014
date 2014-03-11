@@ -31,7 +31,7 @@ class CooperativeController extends AbstractActionController
 	const ROUTE_ADD_DRIVER = 'admin/cooperative/car_driver_add';
 	const ROUTE_ADD_CAR = 'admin/cooperative/car_add';
 	const ROUTE_ADD_LINE_CAR = 'admin/cooperative/line_car_add';
-	const ROUTE_CREATE_RESERVATION_BORD = 'admin/cooperative/reservation_board_create';
+	const ROUTE_CREATE_RESERVATION_BOARD = 'admin/cooperative/reservation_board_create';
 	const ROUTE_CREATE_RESERVATION = 'admin/cooperative/reservation_create';
 	
 	const ROUTE_EDIT_COOPERATIVE = 'admin/cooperative/edit';
@@ -690,7 +690,7 @@ class CooperativeController extends AbstractActionController
 	    $reservationBoard = new ReservationBoard();
 	    $form->bind($reservationBoard);
 	    
-        $url = $this->url()->fromRoute(static::ROUTE_CREATE_RESERVATION_BORD, array('lang' => $lang));
+        $url = $this->url()->fromRoute(static::ROUTE_CREATE_RESERVATION_BOARD, array('lang' => $lang));
 	    $prg = $this->prg($url, true);
 	    
 	    // Proxy for Cooperative
@@ -798,29 +798,32 @@ class CooperativeController extends AbstractActionController
 		    	}
 	           	return new \Zend\View\Model\JsonModel($result);
 	    	} else {
-	    		$cooperative = $om->getRepository('Godana\Entity\Cooperative')->find($cooperativeId);
-	    		$zones = $cooperative->getZones();
-	    		$cars = $cooperative->getCars();
-	    		$lines = $cooperative->getLines();
-		    	$result = array();
-		    	$result['zone'] = array();
-		    	$result['car'] = array();
-		    	$result['line'] = array();
-		    	foreach ($zones as $zone) {
-		    		$res = array('id' => $zone->getId(), 'text' => $zone->getName());
-		    		array_push($result['zone'], $res);
-		    	}
-	    		foreach ($cars as $car) {
-		    		$res = array('id' => $car->getId(), 'text' => $car->getLicense());
-		    		array_push($result['car'], $res);
-		    	}
-		    	foreach ($lines as $line) {
-		    		$departure = $line->getDeparture()->getCityAccented();
-		    		$arrival = $line->getArrival()->getCityAccented();
-		    		$lineValue = $departure . ' ==> ' . $arrival;
-		    		$res = array('id' => $line->getId(), 'text' => $lineValue);			    		
-		    		array_push($result['line'], $res);
-		    	}
+	    		$cooperative = $om->getRepository('Godana\Entity\Cooperative')->find($cooperativeId);	    		
+			    $result = array();
+	    		if ($cooperative instanceof Cooperative) {
+		    		$zones = $cooperative->getZones();
+		    		$cars = $cooperative->getCars();
+		    		$lines = $cooperative->getLines();
+			    	$result['zone'] = array();
+			    	$result['car'] = array();
+			    	$result['line'] = array();
+			    	foreach ($zones as $zone) {
+			    		$res = array('id' => $zone->getId(), 'text' => $zone->getName());
+			    		array_push($result['zone'], $res);
+			    	}
+		    		foreach ($cars as $car) {
+			    		$res = array('id' => $car->getId(), 'text' => $car->getLicense());
+			    		array_push($result['car'], $res);
+			    	}
+			    	foreach ($lines as $line) {
+			    		$departure = $line->getDeparture()->getCityAccented();
+			    		$arrival = $line->getArrival()->getCityAccented();
+			    		$lineValue = $departure . ' ==> ' . $arrival;
+			    		$res = array('id' => $line->getId(), 'text' => $lineValue);			    		
+			    		array_push($result['line'], $res);
+			    	}
+	    		}
+	    		
 	           	return new \Zend\View\Model\JsonModel($result);	 
 	    	}
 	    	   	
@@ -1041,12 +1044,17 @@ class CooperativeController extends AbstractActionController
 		$reservationBoardId = $this->params()->fromRoute('reservationBoardId', null);
 		if ($reservationBoardId != null) {
 			$reservationBoard = $om->getRepository('Godana\Entity\ReservationBoard')->find($reservationBoardId);
-			$departureTime = $reservationBoard->getDepartureTime();
-			return array(
-				'lang' => $lang, 
-				'reservationBoard' => $reservationBoard,
-				'reservationForm' => $this->getModifiedReservationForm()
-			);
+			if ($reservationBoard instanceof ReservationBoard) {
+				$departureTime = $reservationBoard->getDepartureTime();
+				return array(
+					'lang' => $lang, 
+					'reservationBoard' => $reservationBoard,
+					'reservationForm' => $this->getModifiedReservationForm()
+				);
+			} else {
+				return $this->redirect()->toRoute('admin/cooperative/reservation_car_list', array('lang' => $lang), array(), true);
+			}
+			
 		} else {
 			return array('lang' => $lang, 'reservationForm' => $this->getModifiedReservationForm());
 		}
@@ -1071,9 +1079,19 @@ class CooperativeController extends AbstractActionController
 			if (isset($created)) {
 				$form->get('reservation-form')->get('created')->setValue($created->format('m/d/Y H:i:s'));	
 			}
+	        $contacts = $reservation->getPassenger()->getContacts();
+		    $contactsTypes = array();
+		    foreach ($contacts as $c) {
+		    	$contactsTypes[] = $c->getType()->getId();
+		    }
+		    $contacts = $form->get('reservation-form')->get('passenger')->get('contacts');
+		    for ($i = 0; $i < count($contacts); $i++) {
+		    	$form->get('reservation-form')->get('passenger')->get('contacts')->get($i)->get('type')->setValue($contactsTypes[$i]);
+		    }
         } else {
         	$reservation = new Reservation();         	
         	$form->bind($reservation);
+        	$form->get('reservation-form')->get('passenger')->get('contacts')->get(0)->get('type')->setValue(1);
         	$form->get('reservation-form')->get('payment')->setValue(0);         	
         }    
        
@@ -1097,6 +1115,44 @@ class CooperativeController extends AbstractActionController
         ));
          
         return $viewModel;
+    }
+    
+    public function viewReservationAction()
+    {
+    	$viewModel = new ViewModel();
+        $reservationId = $this->params()->fromQuery('reservationId', null);
+        $seatNumber = $this->params()->fromQuery('seatNumber', null);
+        $om = $this->getObjectManager();
+        $viewModel->setTerminal(1);
+        
+        if ($reservationId != null && $seatNumber != null) {
+       		$reservation = $om->getRepository('Godana\Entity\Reservation')->find($reservationId);       		
+       		if ($reservation instanceof Reservation) {       			
+       			$viewModel->setVariables(array(       				
+		        	'reservation' => $reservation,
+       				'seatNumber' => $seatNumber
+		        ));
+       		}       		
+        }
+        return $viewModel;        
+    }
+    
+	public function deleteReservationAction()
+    {
+        $reservationId = $this->params()->fromQuery('reservationId', null);
+        $seatNumber = $this->params()->fromQuery('seatNumber', null);
+        $om = $this->getObjectManager();
+        if ($reservationId != null && $seatNumber != null) {
+       		$reservation = $om->getRepository('Godana\Entity\Reservation')->find($reservationId);       		
+       		if ($reservation instanceof Reservation) {       
+       			$reservationBoardId = $reservation->getReservationBoard()->getId();		
+       			$om->remove($reservation);
+       			$om->flush();
+       			$span = $this->createNewReservationSpan($seatNumber, $reservationBoardId);
+       			return new \Zend\View\Model\JsonModel(array('success' => true, 'span' => $span));
+       		}       		
+        }
+        return new \Zend\View\Model\JsonModel(array('success' => false));       
     }
     
 	public function validatePostAjaxAction()
@@ -1126,31 +1182,47 @@ class CooperativeController extends AbstractActionController
             $form->setData($request->getPost());
             if ( ! $form->isValid()) {
                 $errors = $form->getMessages();
-                $messages['name'] = array();
-            	$messages['value'] = array();
-            	$messages['payment'] = array();
-            	  
-                $passengerNameError = $form->get('reservation-form')->get('passenger')->get('name')->getMessages();
-                $passengerContactValueError = $form->get('reservation-form')->get('passenger')->get('contacts')->get(0)->get('value')->getMessages();
-                $paymentError = $form->get('reservation-form')->get('payment')->getMessages();
-                $i = 0;
-                foreach ($passengerNameError as $message) {
-                	$messages['name'][$i++] = $message;
-                }
-            	$i = 0;
-                foreach ($passengerContactValueError as $message) {
-                	$messages['value'][$i++] = $message;
-                }
-            	$i = 0;
-                foreach ($paymentError as $message) {
-                	$messages['payment'][$i++] = $message;
+            	$errorContacts = $errors['reservation-form']['passenger']['contacts'];
+            	$errorTitle = $errors['reservation-form']['passenger']['title'];
+                $errorName = $errors['reservation-form']['passenger']['name'];               
+                $errorPayment = $errors['reservation-form']['payment'];   
+            	if (count($errorContacts)) {
+            		$messages['contacts'] = array();
+	            	foreach ($errorContacts as $k => $v) {
+	            		foreach ($v['value'] as $value) {
+	            			$messages['contacts'][$k] = array();
+	            			array_push($messages['contacts'][$k], $value);
+	            		}
+	            	}	
+            	}          
+                if (count($errorTitle)) {
+	                $i = 0;
+	                $messages['title'] = array();
+	                foreach ($errorTitle as $message) {
+	                	$messages['title'][$i++] = $message;
+	                }	
+                }            	
+	            if (count($errorName)) {
+	                $i = 0;
+	                $messages['name'] = array();
+	                foreach ($errorName as $message) {
+	                	$messages['name'][$i++] = $message;
+	                }	
+                }                
+            	if (count($errorPayment)) {
+	                $i = 0;
+	                $messages['payment'] = array();
+	                foreach ($errorPayment as $message) {
+	                	$messages['payment'][$i++] = $message;
+	                }	
                 }
             	
             }             
-            if (!empty($errors)){     
+            if (!empty($errors)) {  
 				$response->setContent(\Zend\Json\Json::encode($messages));
             } else {
             	$reservationBoard = $reservation->getReservationBoard();
+            	$reservationBoardId = $reservationBoard->getId();
                 $line = $reservationBoard->getLine();
                 $car = $reservationBoard->getCar();
                 $fare = $car->getLineCarFare($line);
@@ -1159,15 +1231,16 @@ class CooperativeController extends AbstractActionController
 					$is_fully_paid = false;
 				}
 				if ($is_fully_paid) {
-					$reservation->setStatus(1);
+					$reservation->setStatus(1); // Fully paid
 				} else if ($reservation->getPayment() == 0) {
-					$reservation->setStatus(2);
+					$reservation->setStatus(2); // None
 				} else {
-					$reservation->setStatus(0);
+					$reservation->setStatus(0); // Advance
 				}
                 $om->persist($reservation);
                 $om->flush();	
-                
+                $seatNumber = (int)$reservation->getSeat();
+                $reservationId = $reservation->getId();
 				$passenger = $reservation->getPassenger();
 				$p_name = $passenger->getName();
 				$p_title = $passenger->getTitle();
@@ -1178,12 +1251,11 @@ class CooperativeController extends AbstractActionController
 				} else if ($p_title == 2) {
 					$title = "Ms ".ucwords($p_name);
 				}			
+				$span = $this->createSeatBusySpan($is_fully_paid, $seatNumber, $reservationId, $reservationBoardId);
                 $response->setContent(\Zend\Json\Json::encode(
                 	array(
-                		'success'=>1, 
-                		'paid'=>$is_fully_paid, 
-                		'reservationId'=>$reservation->getId(),
-                		'title'=>$title
+                		'success' => true, 
+                		'span' => $span
                 	))
                 );
             }
@@ -1268,6 +1340,36 @@ class CooperativeController extends AbstractActionController
 		} else {
 			return array('lang' => $lang, 'reservationForm' => $this->getModifiedReservationForm());
 		}
+    }
+    
+    private function createNewReservationSpan($seatNumber, $reservationBoardId) {
+    	$translator = $this->getServiceLocator()->get('translator');
+    	$span = '<span class="user-sprite seat-available seat-passenger">';
+		$span .= '<span class="seat-action">';
+		$span .= '<a href="#" class="new-reservation my-tooltip" data-seat-id="'.$seatNumber.'" data-resboard-id="'.$reservationBoardId.'"';
+		$span .= ' title="'.$translator->translate('New').'">';
+		$span .= '<span class="fa fa-file"></span></a>';
+		$span .= '</span></span>';
+		return $span;
+    }
+    
+	private function createSeatBusySpan($isFullyPaid, $seatNumber, $reservationId, $reservationBoardId) {
+    	$translator = $this->getServiceLocator()->get('translator');
+    	if ($isFullyPaid) {
+    		$span = '<span class="user-sprite seat-paid seat-passenger">';	
+    	} else {
+    		$span = '<span class="user-sprite seat-taken seat-passenger">';
+    	}   	
+		$span .= '<span class="seat-action">';
+		$span .= '<a href="#" class="show-detail my-tooltip" data-reservation-id="'.$reservationId.'" title="'.$translator->translate('View').'"';
+		$span .= ' data-seat-id="'.$seatNumber.'" data-resboard-id="'.$reservationBoardId.'"><span class="fa fa-eye"></span></a> ';
+		$span .= '<a href="#" class="delete-reservation my-tooltip" data-reservation-id="'.$reservationId.'" title="'.$translator->translate('Delete').'"';
+		$span .= ' data-seat-id="'.$seatNumber.'" data-resboard-id="'.$reservationBoardId.'"><span class="fa fa-trash-o"></span></a> ';
+		$span .= '<a href="#" class="show-edit my-tooltip" data-reservation-id="'.$reservationId.'" title="'.$translator->translate('Edit').'"';
+		$span .= ' data-seat-id="'.$seatNumber.'" data-resboard-id="'.$reservationBoardId.'"><span class="fa fa-edit"></span></a>';
+		$span .= '</span></span>';	
+    	
+		return $span;
     }
 	
 	public function getZoneForm()

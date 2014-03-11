@@ -68,7 +68,7 @@ class Module
     	return array(
     		'invokables' => array(
     			'godana_sendmail_service' => 'Godana\Service\Mail',
-    			'WebinoImageThumb' => 'WebinoImageThumb\WebinoImageThumb'
+    			'WebinoImageThumb' => 'WebinoImageThumb\WebinoImageThumb',
     		),
     		
     		'factories' => array(

@@ -808,6 +808,26 @@ return array(
 		                            ),
 		                        ),
 		                    ),
+		                    'view_reservation' => array(
+		                        'type' => 'literal',
+		                        'options' => array(
+		                            'route' => '/reservation/view',
+		                            'defaults' => array(
+		                                'controller' => 'cooperative',
+		                                'action'     => 'viewReservation',
+		                            ),
+		                        ),
+		                    ),
+		                    'delete_reservation' => array(
+		                        'type' => 'literal',
+		                        'options' => array(
+		                            'route' => '/reservation/delete',
+		                            'defaults' => array(
+		                                'controller' => 'cooperative',
+		                                'action'     => 'deleteReservation',
+		                            ),
+		                        ),
+		                    ),
 		                    'validate_post_ajax' => array(
 		                        'type' => 'literal',
 		                        'options' => array(

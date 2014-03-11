@@ -37,7 +37,7 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'zone',
                 'attributes' => array(
-            		'class' => 'form-control zone-select',
+            		'class' => 'gdn_select zone-select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -45,8 +45,9 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
                     'property'       => 'name',
                     'label'          => 'Zone',
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
+			        'empty_option' => 'Select zone',
                     'disable_inarray_validator' => true               
                 ),
         	)
@@ -56,12 +57,12 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'line',
         	'attributes' => array(
-        		'class' => 'line-select form-control'
+        		'class' => 'line-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Line',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -70,12 +71,12 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'reservationBoard',
         	'attributes' => array(
-        		'class' => 'departure-select form-control'
+        		'class' => 'departure-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Departure time',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -84,12 +85,12 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'cooperative',
         	'attributes' => array(
-        		'class' => 'cooperative-select form-control'
+        		'class' => 'cooperative-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Cooperative',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -99,12 +100,12 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'car',
         	'attributes' => array(
-        		'class' => 'car-select form-control'
+        		'class' => 'car-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Car',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -113,13 +114,14 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'type' => 'Zend\Form\Element\Text',
             'name' => 'fare',
         	'attributes' => array(
-        		'class' => 'form-control fare-input',
-        		'disabled' => 'disabled'
+        		'class' => 'gdn_text fare-input',
+        		'disabled' => 'disabled',
+        		'placeholder' => 'Fare'
         	),
         	'options' => array(
                 'label' => 'Fare',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -128,12 +130,12 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'seat',
         	'attributes' => array(
-        		'class' => 'seat-select form-control'
+        		'class' => 'seat-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Seat',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -149,16 +151,17 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'options' => array(
                 'label' => 'Status',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
 		        'value_options' => array(
 	            	'0' => 'Advance',
 	           	 	'1' => 'Paid',
 		        	'2' => 'PA',
-			   	),			   	
+			   	),	
+			   	'empty_option' => 'Select status'		   	
             ),   
             'attributes' => array(
-            	'class' => 'chosen-select form-control',
+            	'class' => 'status-select gdn_select',
             ),        
               
         ));
@@ -168,12 +171,13 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'options' => array(
                 'label' => 'Payment',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Payment'
             ),
         ));
         
@@ -194,7 +198,21 @@ class ReservationFieldset extends Fieldset implements InputFilterProviderInterfa
             'seat' => array(
                 'required' => true,
             ),
-            
+            'line' => array(
+                'required' => true
+            ),
+            'reservationBoard' => array(
+                'required' => true
+            ),
+            'cooperative' => array(
+                'required' => true
+            ),
+            'car' => array(
+                'required' => true
+            ),
+            /*'passenger' => array(
+                'required' => false
+            ),*/
             'payment' => array(
                 'required' => true,
             	'filters'  => array(

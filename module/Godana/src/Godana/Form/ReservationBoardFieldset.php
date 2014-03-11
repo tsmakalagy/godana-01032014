@@ -37,7 +37,7 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'cooperative',
                 'attributes' => array(
-            		'class' => 'form-control cooperative-select',
+            		'class' => 'gdn_select cooperative-select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -54,8 +54,9 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
 			        	),			        	
 			        ),
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
+			        'empty_option' => 'Select cooperative',
                     'disable_inarray_validator' => true               
                 ),
         	)
@@ -66,12 +67,12 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
                 'type' => 'Zend\Form\Element\Hidden',
 	            'name' => 'zone',
 	        	'attributes' => array(
-	        		'class' => 'zone-select form-control'
+	        		'class' => 'zone-select gdn_select'
 	        	),
 	        	'options' => array(
 	                'label' => 'Zone',
 	        		'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
 	            ),
             )
@@ -81,12 +82,12 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'line',
         	'attributes' => array(
-        		'class' => 'line-select form-control'
+        		'class' => 'line-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Line',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -96,12 +97,12 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'car',
         	'attributes' => array(
-        		'class' => 'car-select form-control'
+        		'class' => 'car-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Car',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -111,12 +112,13 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
             'options' => array(
                 'label' => 'Departure',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'datepicker form-control',
+            	'class' => 'datepicker gdn_text',
+            	'placeholder' => 'Departure'
             ),
         ));
     }
@@ -127,7 +129,15 @@ class ReservationBoardFieldset extends Fieldset implements InputFilterProviderIn
             'id' => array(
                 'required' => false
             ),
-
+			'zone' => array(
+                'required' => true
+            ),
+            'line' => array(
+                'required' => true
+            ),
+            'car' => array(
+                'required' => true
+            ),
             'departureTime' => array(
                 'required' => true,
             	'filters' => array (

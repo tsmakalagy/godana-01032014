@@ -32,7 +32,7 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'cooperative',
                 'attributes' => array(
-            		'class' => 'form-control cooperative-select',
+            		'class' => 'gdn_select cooperative-select',
                 ),                
                 'options' => array(
                     'object_manager' => $this->objectManager,
@@ -43,7 +43,7 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
 		                return ucwords($targetEntity->getName());
 		            },
                 	'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
 			        'find_method' => array(
 			        	'name' => 'findCooperativeOfCurrentUser',
@@ -51,6 +51,7 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
 			        		'currentUser' => 1
 			        	),			        	
 			        ),
+			        'empty_option' => 'Select cooperative',
                     'disable_inarray_validator' => true               
                 ),
         	)
@@ -61,12 +62,12 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
                 'type' => 'Zend\Form\Element\Hidden',
 	            'name' => 'zone',
 	        	'attributes' => array(
-	        		'class' => 'zone-select form-control'
+	        		'class' => 'zone-select gdn_select'
 	        	),
 	        	'options' => array(
 	                'label' => 'Zone',
 	        		'label_attributes' => array(
-			            'class' => 'col-sm-3 control-label',
+			            'class' => 'sr-only',
 			        ),
 	            ),
             )
@@ -76,12 +77,12 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'line',
         	'attributes' => array(
-        		'class' => 'line-select form-control'
+        		'class' => 'line-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Line',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -91,12 +92,12 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
             'type' => 'Zend\Form\Element\Hidden',
             'name' => 'car',
         	'attributes' => array(
-        		'class' => 'car-select form-control'
+        		'class' => 'car-select gdn_select'
         	),
         	'options' => array(
                 'label' => 'Car',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
         ));
@@ -106,12 +107,13 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
             'options' => array(
                 'label' => 'Seats',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Seats'
             ),
         ));
         
@@ -120,12 +122,13 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
             'options' => array(
                 'label' => 'Columns',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Columns'
             ),
         ));
         
@@ -134,12 +137,13 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
             'options' => array(
                 'label' => 'Fare',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Fare'
             ),
         ));
         
@@ -149,6 +153,15 @@ class LineCarFieldset extends Fieldset implements InputFilterProviderInterface, 
 	public function getInputFilterSpecification()
     {
         return array(
+        	'zone' => array(
+        		'required' => true
+        	),
+        	'line' => array(
+        		'required' => true
+        	),
+        	'car' => array(
+        		'required' => true
+        	),
             'seats' => array(
                 'required' => true,
             	'filters'  => array(

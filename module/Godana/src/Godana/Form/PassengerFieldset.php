@@ -38,16 +38,17 @@ class PassengerFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => array(
                 'label' => 'Title',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
 		        'value_options' => array(
 	            	'0' => 'Mr',
 	           	 	'1' => 'Mme',
 		        	'2' => 'Ms',
-			   	),			   	
+			   	),	
+			   	'empty_option' => 'Select title'		   	
             ),   
             'attributes' => array(
-            	'class' => 'chosen-select form-control',
+            	'class' => 'title-select gdn_select',
             ),        
               
         ));
@@ -57,12 +58,13 @@ class PassengerFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => array(
                 'label' => 'Name',
         		'label_attributes' => array(
-		            'class' => 'col-sm-3 control-label',
+		            'class' => 'sr-only',
 		        ),
             ),
             'attributes' => array(
                 'type' => 'text',
-            	'class' => 'form-control',
+            	'class' => 'gdn_text',
+            	'placeholder' => 'Name'
             ),
         ));
         
@@ -92,7 +94,7 @@ class PassengerFieldset extends Fieldset implements InputFilterProviderInterface
             ),
             
             'title' => array(
-            	'required' => false
+            	'required' => true
             ),
 
             'name' => array(

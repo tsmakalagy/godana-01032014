@@ -180,6 +180,8 @@ return array(
                 array('route' => 'admin/cooperative/reservation_car_list', 'roles' => array('admin', 'cooperative-admin', 'cooperative-teller')),
                 array('route' => 'admin/cooperative/reservation_car_detail', 'roles' => array('admin', 'cooperative-admin', 'cooperative-teller')),
                 array('route' => 'admin/cooperative/show_reservation_form', 'roles' => array('user')),
+                array('route' => 'admin/cooperative/view_reservation', 'roles' => array('user')),
+                array('route' => 'admin/cooperative/delete_reservation', 'roles' => array('user')),
                 array('route' => 'admin/cooperative/validate_post_ajax', 'roles' => array('user')),
                 
                 array('route' => 'search', 'roles' => array('guest')),

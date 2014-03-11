@@ -1,6 +1,8 @@
 <?php
 namespace GodanaTest;//Change this namespace for your test
 
+use GodanaTest\Entity\Util\ServiceManagerFactory;
+
 use Zend\Loader\AutoloaderFactory;
 use Zend\Mvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
@@ -61,6 +63,7 @@ class Bootstrap
         static::$serviceManager = $serviceManager;
         static::$entityManager = $entityManager;
         static::$config = $config;
+        ServiceManagerFactory::setApplicationConfig($config);
     }
 
     public static function getServiceManager()
